@@ -1,0 +1,12 @@
+node_modules
+*.tmp
+*.tmp.*
+config.json
+*.credentials.json
+static/epub/*
+static/cover/*
+static/cache/*
+database/
+.vscode/
+package-lock.json
+nodemon.json

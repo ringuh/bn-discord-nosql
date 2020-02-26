@@ -1,0 +1,34 @@
+{
+  "name": "bn-discord-nosql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "@google-cloud/firestore": "^3.5.1",
+    "@types/node": "^13.7.1",
+    "@types/puppeteer": "^2.0.0",
+    "axios": "^0.19.2",
+    "chalk": "^3.0.0",
+    "discord.js": "^11.5.1",
+    "epub-gen-funstory": "^0.1.3",
+    "firebase-admin": "^8.9.2",
+    "ip": "^1.1.5",
+    "javascript-time-ago": "^2.0.7",
+    "puppeteer": "^2.1.1",
+    "sharp": "^0.24.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ringuh/bn-discord-nosql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ringuh/bn-discord-nosql/issues"
+  },
+  "homepage": "https://github.com/ringuh/bn-discord-nosql#readme"
+}
