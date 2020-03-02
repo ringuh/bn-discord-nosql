@@ -12,6 +12,13 @@ import { fetchNovels } from "./babel/fetchNovels";
         await fetchNovels(browser, chapterLimit)
     }
 
+    if (process.argv.includes('track')) {
+        browser = await launchBrowser()
+       /*  const chapterLimit = 
+        await fetchNovel(browser, ) */
+    }
+
+
     else if (process.argv.includes('raw')) {
         browser = await launchBrowser()
     }

@@ -17,7 +17,7 @@ export interface PageApiDTO {
     name?: string;
     originRefId?: string;
     publisherId?: string;
-    publishTime?: Date
+    publishTime?: string;
     synopsis?: string;
     tag?: string;
     translatorId?: string;
@@ -34,8 +34,8 @@ export interface PageApiDTO {
     releasedChapterCount?: number;
     cpEnCompanyName?: string;
     sensitivityRating?: string;
-    updateTime?: Date
-    createTime?: Date
+    updateTime?: string;
+    createTime?: string;
     id?: string;
 }
 

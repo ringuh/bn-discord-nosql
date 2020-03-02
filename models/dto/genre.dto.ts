@@ -1,6 +1,6 @@
 export interface GenreDTO {
     id?: string;
     name?: string;
-    updateTime?: Date;
-    createTime?: Date;
+    updateTime?: string;
+    createTime?: string;
 }

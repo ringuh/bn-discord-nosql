@@ -1,5 +1,6 @@
 import { Puppet } from './puppet.model';
 import { Novel } from './novel.model';
+import { Chapter } from './chapter.model'
 const { Firestore } = require('@google-cloud/firestore');
 const { FieldValue } = require('firebase-admin').firestore;
 

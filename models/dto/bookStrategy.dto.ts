@@ -6,7 +6,7 @@ export interface BookStrategyDTO {
     enabledExternalLink: boolean;
     showText: string;
     externalLink: string;
-    updateTime: Date;
-    createTime: Date;
+    updateTime: string;
+    createTime: string;
     id: string;
 }

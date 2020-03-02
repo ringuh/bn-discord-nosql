@@ -3,7 +3,7 @@ export interface NovelChapterDTO {
     name: string;
     canonicalName: string;
     type: string;
-    publishTime: Date;
+    publishTime: string;
     isBought: boolean;
     isFree: boolean;
     isLimitFree: boolean;
@@ -31,7 +31,7 @@ export interface ChapterDTO {
     isLimitFree: boolean;
     originBrick: number;
     discountRate: number;
-    expireTime?: Date;
+    expireTime?: string;
     bookId: string;
     content: string;
     url: string;
@@ -40,13 +40,13 @@ export interface ChapterDTO {
     zhTitle?: string;
     name: string;
     num: number;
-    publishTime: Date;
+    publishTime: string;
     translatorId?: string;
     canonicalName: string;
     translateStatus: string;
     voteId?: string;
     isPublish: boolean;
-    updateTime: Date;
-    createTime: Date;
+    updateTime: string;
+    createTime: string;
     id: string;
 }

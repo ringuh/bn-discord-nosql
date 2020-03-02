@@ -8,12 +8,12 @@ export interface PagesLastChapterDTO {
     type?: string;
     name?: string;
     num?: number;
-    publishTime?: Date;
+    publishTime?: string;
     canonicalName?: string;
     genreId?: string;
     genreName?: string;
-    updateTime?: Date;
-    createTime?: Date;
+    updateTime?: string;
+    createTime?: string;
     id?: string;
 }
 
@@ -26,7 +26,7 @@ export interface LastChapterDTO {
     hasContent: boolean;
     url: string;
     translatorId?: string;
-    publishTime: Date;
+    publishTime: string;
     canonicalName: string;
     isPublish?: boolean;
     summary: string;

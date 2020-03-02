@@ -4,7 +4,7 @@ export interface SourceDTO {
     url?: any;
     gitFolder: string;
     gitProjectId: number;
-    updateTime: Date;
-    createTime: Date;
+    updateTime: string;
+    createTime: string;
     id: string;
 }

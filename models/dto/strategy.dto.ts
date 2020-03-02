@@ -4,7 +4,7 @@ export interface StrategyDTO {
     offlineReason: string;
     isShowOfflineReason: boolean;
     remark: string;
-    updateTime: Date;
-    createTime: Date;
+    updateTime: string;
+    createTime: string;
     id: string;
 }

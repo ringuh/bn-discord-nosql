@@ -1,9 +1,10 @@
 import { AuthorDTO } from "./author.dto";
 import { GenreDTO } from "./genre.dto"
 import { SourceDTO } from "./source.dto";
-
 import { BookStrategyDTO } from "./bookStrategy.dto";
 import { LastChapterDTO } from "./lastChapter.dto";
+import { BookStopNoticeDTO } from "./bookStopNotice.dto";
+import { PromotionDTO } from "./promotion.dto";
 
 export interface NovelDTO {
     author: AuthorDTO;
@@ -15,11 +16,11 @@ export interface NovelDTO {
     chapterCount: number;
     translator?: any;
     bookStrategy: BookStrategyDTO;
-    bookStopNotice?: any;
+    bookStopNotice?: BookStopNoticeDTO;
     isShowStrategy: boolean;
     isPay: boolean;
     enabledProofReading: boolean;
-    promotion?: any;
+    promotion?: PromotionDTO;
     authorId: string;
     isCopyrightAuthorized: string;
     cover: string;
@@ -28,7 +29,7 @@ export interface NovelDTO {
     name: string;
     originRefId: string;
     publisherId?: any;
-    publishTime: Date;
+    publishTime: string;
     synopsis: string;
     tag: string;
     translatorId?: any;
@@ -46,7 +47,7 @@ export interface NovelDTO {
     cpEnCompanyName: string;
     corpusBookId: number;
     sensitivityRating: string;
-    updateTime: Date;
-    createTime: Date;
+    updateTime: string;
+    createTime: string;
     id: string;
 }

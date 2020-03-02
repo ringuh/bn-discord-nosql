@@ -2,6 +2,6 @@ export interface AuthorDTO {
     name: string;
     enName: string;
     updateTime?: any;
-    createTime: Date;
+    createTime: string;
     id: string;
 }

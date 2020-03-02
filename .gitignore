@@ -3,9 +3,7 @@ node_modules
 *.tmp.*
 config.json
 *.credentials.json
-static/epub/*
-static/cover/*
-static/cache/*
+static/*/*
 database/
 .vscode/
 package-lock.json
