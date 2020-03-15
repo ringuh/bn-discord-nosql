@@ -2,11 +2,11 @@ import config from "../funcs/config"
 import { db, Novel, Puppet } from "../models"
 import { Browser, Page } from "puppeteer"
 import { PageApiDTO } from "../models/dto/pageApi.dto"
-import { Collections } from "../models/enum/collections"
 import { InitialPage } from "./babelSteps"
 import { CodeList } from "../models/enum/codeList"
 import { ReturnObject } from "../models/interface/returnObject.type"
 import { waitFor } from "../funcs/waitFor"
+import { LiveMessage } from "./liveMessage"
 const { red, magenta, yellow, green } = require('chalk').bold
 
 interface jsonDTO {
@@ -15,13 +15,9 @@ interface jsonDTO {
 }
 
 export async function fetchNovels(browser: Browser, chapterLimit: number): Promise<ReturnObject> {
-
-    const page = await InitialPage(browser, null)
-    if (!page) {
-        const msg = red("Loading cookie failed")
-        console.log(msg)
-        return { code: CodeList.babel_cookie_missing, message: msg }
-    }
+    const liveMessage = new LiveMessage()
+    const page = await InitialPage(browser, null, liveMessage)
+    if (!page) return await liveMessage.fetchingCookieFailed()
 
     let pageNr: number = 0
     let attemptNr: number = 0;
@@ -32,11 +28,10 @@ export async function fetchNovels(browser: Browser, chapterLimit: number): Promi
         console.log(green("page", pageNr))
         try {
             await page.goto(fetch_url);
-            await page.screenshot({ path: 'screenshot.png' });
             json = await page.evaluate(() => {
                 return JSON.parse(document.querySelector("body").innerText);
             });
-
+            if (json.code) continue
         }
         catch (e) {
             console.log(red(`JSON parse error: ${e.message}`))
@@ -64,7 +59,6 @@ export async function fetchNovels(browser: Browser, chapterLimit: number): Promi
     }
     return { code: CodeList.success, message: "Fetched novels" }
 }
-
 
 
 

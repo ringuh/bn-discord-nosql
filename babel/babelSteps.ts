@@ -3,18 +3,18 @@ import config from "../funcs/config";
 import { Collections } from "../models/enum/collections";
 import { db } from "../models";
 import { Interceptions } from "../models/enum/interceptions";
+import { waitFor } from "../funcs/waitFor";
+import { LiveMessage } from "./liveMessage";
 const { magenta, cyan } = require('chalk').bold
 
-export const InitialPage = async (browser: Browser, interception: Interceptions) => {
-    let [i, limit] = [0, 3];
-    let page: Page;
-    while (i < limit && !page) {
-        i++;
+export const InitialPage = async (browser: Browser, interception: Interceptions, liveMessage: LiveMessage) => {
+    const limitNr = 3;
+    for (let attemptNr = 0; attemptNr < limitNr; ++attemptNr) {
+        let page: Page;
         try {
-            console.log(cyan(`Fetching cookie attempt ${i}`))
+            liveMessage.fetchingCookie(attemptNr, limitNr)
             page = await browser.newPage();
             await page.goto("https://babelnovel.com/search");
-            //await page.screenshot({path: 'screenshot.png'});
             // lets find that history-text
             const h2s = await page.evaluate(() =>
                 Array.from(
@@ -26,12 +26,13 @@ export const InitialPage = async (browser: Browser, interception: Interceptions)
             await setInterception(page, interception)
             return page
         } catch (e) {
-            await page.waitFor(config.numerics.retry_seconds)
+            await waitFor()
             await page.close()
             page = null
             continue
         }
     }
+    return null
 }
 
 

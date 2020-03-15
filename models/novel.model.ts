@@ -2,7 +2,7 @@ import { AbstractModel } from "./abstract.model";
 import { PageApiDTO } from "./dto/pageApi.dto";
 import { Collections } from "./enum/collections";
 import { CodeList } from "./enum/codeList"
-import { QueryDocumentSnapshot, WriteResult } from "@google-cloud/firestore";
+import { QueryDocumentSnapshot, WriteResult, Timestamp } from "@google-cloud/firestore";
 import { Page } from "puppeteer";
 import { ReturnObject } from "./interface/returnObject.type";
 import config from "../funcs/config";
@@ -16,6 +16,7 @@ interface NovelName {
     raw: string,
     canonical: string,
     historyCanonical: string,
+    search: string,
     abbr: string,
     aliases: string[]
 }
@@ -33,10 +34,10 @@ interface NovelStatus {
 }
 
 interface NovelTimestamp {
-    createdAt: Date,
-    updatedAt: Date,
-    checkedAt: Date,
-    successAt: Date
+    createdAt: string,
+    updatedAt: string,
+    checkedAt: string,
+    successAt: string
 }
 
 interface AuthorName {
@@ -44,12 +45,13 @@ interface AuthorName {
     enName: string,
 }
 
-class NovelArgs {
+export class NovelArgs {
     babelId: string;
     name?: NovelName;
     cover?: string;
     author?: AuthorName;
     releasedChapterCount?: number;
+    epubCount?: number;
     ratingNum?: number;
     tag?: Array<string>;
     genre?: string[];
@@ -95,13 +97,13 @@ export class Novel extends AbstractModel {
                 raw: json.cnName,
                 canonical: json.canonicalName,
                 historyCanonical: json.historyCanonicalName,
+                search: json.name.toLowerCase(),
                 aliases: json.alias?.split("|").filter(t => t && t.trim().length) || []
             },
             timestamp: {
                 ...novel.timestamp,
-                checkedAt: new Date(),
-                createdAt: new Date(json.createTime),
-                updatedAt: new Date(json.updateTime)
+                createdAt: json.createTime,
+                updatedAt: json.updateTime
             },
             status: {
                 ...novel.status,
@@ -137,6 +139,7 @@ export class Novel extends AbstractModel {
                 }
             })
             if (Object.keys(differences).length > 0) {
+                differences["timestamp"] = { ...changes.timestamp, checkedAt: new Date().toISOString() }
                 return await this.document.update(differences)
                     .then((res: WriteResult) => {
                         const msg = `Updated Novel ${novel.name.canonical}`
@@ -156,7 +159,7 @@ export class Novel extends AbstractModel {
     async updateFromNovelApi(json: NovelDTO): Promise<ReturnObject> {
         const snapshot = await this.document.get()
         const novel: NovelDocument = snapshot.data() || new NovelDocument({ babelId: snapshot.id })
-        
+
         const changes: NovelArgs = {
             ...novel,
             name: {
@@ -165,6 +168,7 @@ export class Novel extends AbstractModel {
                 raw: json.cnName,
                 canonical: json.canonicalName,
                 historyCanonical: json.historyCanonicalName,
+                search: json.name.toLowerCase(),
                 aliases: json.alias?.split("|").filter(t => t && t.trim().length) || []
             },
             author: {
@@ -174,9 +178,9 @@ export class Novel extends AbstractModel {
             },
             timestamp: {
                 ...novel.timestamp,
-                createdAt: new Date(json.createTime),
-                updatedAt: new Date(json.updateTime),
-                checkedAt: new Date(),
+                createdAt: json.createTime,
+                updatedAt: json.updateTime,
+                checkedAt: new Date().toISOString(),
             },
             status: {
                 ...novel.status,
@@ -222,7 +226,6 @@ export class Novel extends AbstractModel {
         }
 
         return { code: CodeList.novel_fetch_checked, message: "Novel fetch checked, nothing to update" }
-
     }
 
     async fetchNovel(page: Page): Promise<ReturnObject> {

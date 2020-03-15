@@ -1,7 +1,7 @@
 import { Browser } from "puppeteer";
 import { launchBrowser } from "./babel/headlessChrome";
 import { fetchNovels } from "./babel/fetchNovels";
-
+import './extensions/message.extension'
 
 !(async () => {
     let browser:Browser = null;
@@ -18,6 +18,9 @@ import { fetchNovels } from "./babel/fetchNovels";
         await fetchNovel(browser, ) */
     }
 
+    if(process.argv.includes('update')) {
+        browser = await launchBrowser()
+    }   
 
     else if (process.argv.includes('raw')) {
         browser = await launchBrowser()
